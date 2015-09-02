@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace addressbook_web_tests
+namespace geometry
 {
-    class Square
+    class Square : Figure
     {
         private int size;
-
+       
         public Square(int size)
         {
             this.size = size;
@@ -17,14 +17,8 @@ namespace addressbook_web_tests
 
         public int  Size
         {
-            get
-            {
-                return size;
-            } 
-            set
-            {
-                size = value;
-            }
-        }
+            get {return size;} 
+            set {size = value;}
+        } 
     }
 }
