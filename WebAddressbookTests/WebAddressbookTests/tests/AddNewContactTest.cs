@@ -9,9 +9,8 @@ namespace WebAddressbookTests
         public void AddNewContactTest()
         {
             app.Navigator.GoToHomePage();
-            app.Auth.Login(new AccountData("admin", "secret"));
-            app.Contact.InitContactCreation();
-
+            app.Auth.Login(new AccountData("admin", "secret")); 
+            
             //Создаем объект класса ContactData и задаем значения переменных
             ContactData contact = new ContactData("Ivan")
             {
@@ -34,11 +33,11 @@ namespace WebAddressbookTests
                 Notes = "testnotes",
                 Email = ""
             };
-                    
-            app.Contact.FillNewContactForm(contact);
-            app.Contact.SubmitNewContactCreation();
-            //String URL = driver.Url;
-            //Assert.AreEqual(URL, baseURL + "/addressbook/");
+
+            app.Contact
+                .InitContactCreation()
+                .FillNewContactForm(contact)
+                .SubmitNewContactCreation();
         }
     }
 }
