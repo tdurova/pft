@@ -1,17 +1,21 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class AddNewContactCreationTest : TestBase
+    public class ContactModificationTests : TestBase
     {
         [Test]
-        public void AddNewContactTest()
+        public void ContactModificationTest()
         {
-           //Создаем объект класса ContactData и задаем значения переменных
-            ContactData contact = new ContactData("Ivan")
+            ContactData newContact = new ContactData("Vasya2")
             {
-                Title = "",
+                Title = "myNewTitle",
                 Company = "",
                 Nickname = "",
                 Lastname = "",
@@ -26,12 +30,12 @@ namespace WebAddressbookTests
                 Mobile = "",
                 Home = "",
                 Phone2 = "",
-                Byear = "1990",
+                Byear = "",
                 Notes = "testnotes",
                 Email = ""
             };
 
-            app.Contact.Create(contact);
+            app.Contact.Modify(12, newContact);
         }
     }
 }

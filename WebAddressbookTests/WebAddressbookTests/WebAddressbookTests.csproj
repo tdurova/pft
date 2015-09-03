@@ -63,20 +63,22 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="tests\GroupModificationTests.cs" />
+    <Compile Include="tests\Contact tests\ContactRemovalTests.cs" />
+    <Compile Include="tests\Contact tests\ContactModificationTests.cs" />
+    <Compile Include="tests\Group tests\GroupModificationTests.cs" />
     <Compile Include="model\AccountData.cs" />
-    <Compile Include="tests\AddNewContactTest.cs" />
+    <Compile Include="tests\Contact tests\ContactCreationTests.cs" />
     <Compile Include="appmanager\ApplicationManager.cs" />
     <Compile Include="model\ContactData.cs" />
     <Compile Include="appmanager\ContactHelper.cs" />
     <Compile Include="model\GroupData.cs" />
     <Compile Include="appmanager\GroupHelper.cs" />
-    <Compile Include="tests\GroupRemovalTests.cs" />
+    <Compile Include="tests\Group tests\GroupRemovalTests.cs" />
     <Compile Include="appmanager\HelperBase.cs" />
     <Compile Include="appmanager\LoginHelper.cs" />
     <Compile Include="appmanager\NavigationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="tests\GroupCreationTests.cs" />
+    <Compile Include="tests\Group tests\GroupCreationTests.cs" />
     <Compile Include="tests\TestBase.cs" />
   </ItemGroup>
   <ItemGroup>

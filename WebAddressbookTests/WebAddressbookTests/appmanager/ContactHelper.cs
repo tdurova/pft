@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using System.Text.RegularExpressions;
+using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
@@ -17,6 +19,23 @@ namespace WebAddressbookTests
             InitContactCreation();
             FillNewContactForm(contact);
             SubmitNewContactCreation();
+            return this;
+        }
+
+        public ContactHelper Modify(int p, ContactData newContact)
+        {
+            manager.Navigator.GoToHomePage();
+            initContactModification();
+            FillNewContactForm(newContact);
+            submitContactModification();
+            return this;
+        }
+
+        public ContactHelper Remove(string p)
+        {
+            manager.Navigator.GoToHomePage();
+            SelelectContact(p);
+            RemoveContact(p);
             return this;
         }
 
@@ -69,6 +88,57 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
             return this;
-        }        
+        }
+
+        private ContactHelper submitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        private ContactHelper initContactModification()
+        {
+            driver.FindElement(By.XPath("id(\"maintable\")/tbody[1]/tr[7]/td[8]/a[1]/img[1]")).Click();
+            return this;
+        }
+
+        private ContactHelper RemoveContact(string p)
+        {
+            //driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            //Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            driver.FindElement(By.XPath("//div[@id='content']/form[2]/div[2]/input")).Click();
+            Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            return this;
+        }
+
+        public string CloseAlertAndGetItsText()
+        {
+            try
+            {
+                IAlert alert = driver.SwitchTo().Alert();
+                string alertText = alert.Text;
+                if (acceptNextAlert)
+                {
+                    alert.Accept();
+                }
+                else
+                {
+                    alert.Dismiss();
+                }
+                return alertText;
+            }
+            finally
+            {
+                acceptNextAlert = true;
+            }
+        }
+
+        private ContactHelper SelelectContact(string p)
+        {
+            driver.FindElement(By.Id(p)).Click();
+            return this;
+        }
+
+        public bool acceptNextAlert { get; set; }
     }
 }

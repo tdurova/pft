@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebAddressbookTests
+﻿namespace WebAddressbookTests
 {
     public class ContactData
     {
@@ -28,32 +22,31 @@ namespace WebAddressbookTests
         //конструктор 1
         public ContactData(string firstname)
         {
-            Work = "";
-            this.Firstname = firstname;
+            Firstname = firstname;
         }
 
         //конструктор 2
         public ContactData(string firstname, string middlename, string lastname, string nickname, string photo, string company, string title, string address, 
             string home, string mobile, string work, string email, string bday, string bmonth, string byear, string address2, string phone2, string notes)
         {
-            this.Firstname = firstname;
-            this.Middlename = middlename;
-            this.Lastname = lastname;
-            this.Nickname = nickname;
-            this.Photo = photo;
-            this.Company = company;
-            this.Title = title;
-            this.Address = address;
-            this.Home = home;
-            this.Mobile = mobile;
-            this.Work = work;
-            this.Email = email;
-            this.Bday = bday;
-            this.Bmonth = bmonth;
-            this.Byear = byear;
-            this.Address2 = address2;
-            this.Phone2 = phone2;
-            this.Notes = notes;
+            Firstname = firstname;
+            Middlename = middlename;
+            Lastname = lastname;
+            Nickname = nickname;
+            Photo = photo;
+            Company = company;
+            Title = title;
+            Address = address;
+            Home = home;
+            Mobile = mobile;
+            Work = work;
+            Email = email;
+            Bday = bday;
+            Bmonth = bmonth;
+            Byear = byear;
+            Address2 = address2;
+            Phone2 = phone2;
+            Notes = notes;
         }
 
         public string Firstname { get; set; }
