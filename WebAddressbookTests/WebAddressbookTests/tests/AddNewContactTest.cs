@@ -8,10 +8,7 @@ namespace WebAddressbookTests
         [Test]
         public void AddNewContactTest()
         {
-            app.Navigator.GoToHomePage();
-            app.Auth.Login(new AccountData("admin", "secret")); 
-            
-            //Создаем объект класса ContactData и задаем значения переменных
+           //Создаем объект класса ContactData и задаем значения переменных
             ContactData contact = new ContactData("Ivan")
             {
                 Title = "",
@@ -34,10 +31,7 @@ namespace WebAddressbookTests
                 Email = ""
             };
 
-            app.Contact
-                .InitContactCreation()
-                .FillNewContactForm(contact)
-                .SubmitNewContactCreation();
+            app.Contact.Create(contact);
         }
     }
 }
