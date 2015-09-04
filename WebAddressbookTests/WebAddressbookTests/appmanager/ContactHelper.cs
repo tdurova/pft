@@ -103,7 +103,7 @@ namespace WebAddressbookTests
             {
                 IAlert alert = driver.SwitchTo().Alert();
                 string alertText = alert.Text;
-                if (acceptNextAlert)
+                if (AcceptNextAlert)
                 {
                     alert.Accept();
                 }
@@ -115,17 +115,16 @@ namespace WebAddressbookTests
             }
             finally
             {
-                acceptNextAlert = true;
+                AcceptNextAlert = true;
             }
         }
 
-        private ContactHelper SelelectContact(string p)
+        private void SelelectContact(string p)
         {
             driver.FindElement(By.Id(p)).Click();
-            return this;
         }
 
-        public bool acceptNextAlert
+        public bool AcceptNextAlert
         {
             get { return _acceptNextAlert; }
             set { _acceptNextAlert = value; }
