@@ -11,7 +11,7 @@ namespace WebAddressbookTests
         public HelperBase(ApplicationManager manager)
         {
             this.manager = manager;
-            this.driver = manager.Driver;
+            driver = manager.Driver;
         }
 
         public void Type(By locator, string text)
@@ -26,6 +26,19 @@ namespace WebAddressbookTests
         public void SelectElementInList(By locator, string text)
         {
             new SelectElement(driver.FindElement(locator)).SelectByText(text);
+        }
+
+        public bool IsElementPresent(By by)
+        {
+            try
+            {
+                driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
         }
     }
 }

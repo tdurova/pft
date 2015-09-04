@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Text;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-using System.Threading;
 
 namespace WebAddressbookTests
 {
@@ -42,6 +41,18 @@ namespace WebAddressbookTests
             }
         }
 
+        public static ApplicationManager GetInstance()
+        {
+            if (!app.IsValueCreated)
+            {
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.Navigator.GoToHomePage();
+                app.Value = newInstance;
+                
+            }
+            return app.Value;
+        }
+
         public IWebDriver Driver
         {
             get { return driver; }
@@ -66,16 +77,6 @@ namespace WebAddressbookTests
         public ContactHelper Contact
         {
             get { return contactHelper; }
-        }
-
-        public static ApplicationManager GetInstance()
-        {
-            if (! app.IsValueCreated)
-            {
-                app.Value = new ApplicationManager();
-            }
-
-            return app.Value;
         }
     }
 }
