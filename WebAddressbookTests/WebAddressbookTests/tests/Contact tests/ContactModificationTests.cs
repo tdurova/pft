@@ -30,7 +30,7 @@ namespace WebAddressbookTests
                 Email = ""
             };
 
-            app.Contact.Modify(12, newContact);
+            app.Contact.Modify(18, newContact);
         }
     }
 }

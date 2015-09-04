@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 
 namespace WebAddressbookTests
 {
@@ -34,9 +35,17 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int i)
         {
             manager.Navigator.GoToGroupsPage();
-            SelectGroup(i);
-            RemoveGroup();
-            ReturnToGroupsPage();
+            if (IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + i + "]")))
+            {
+                SelectGroup(i);
+                RemoveGroup();
+                ReturnToGroupsPage();
+            }
+            else
+            {
+                Assert.Fail("Нет группы с id =" + i);
+            }
+            
             return this;
         }
         
@@ -53,8 +62,6 @@ namespace WebAddressbookTests
             Type(By.Name("group_footer"), group.Footer);
             return this;
         }
-
-
 
         public GroupHelper SubmitGroupCreation()
         {
@@ -76,8 +83,15 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
-            return this;
+            if (IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
+            {
+                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            }
+            else
+            {
+                Assert.Fail("Нет группы с id =" + index);
+            }
+           return this;
         }
 
         public GroupHelper submitGroupModification()

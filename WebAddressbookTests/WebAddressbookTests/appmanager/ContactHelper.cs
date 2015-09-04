@@ -26,7 +26,7 @@ namespace WebAddressbookTests
         public ContactHelper Modify(int p, ContactData newContact)
         {
             manager.Navigator.GoToHomePage();
-            initContactModification();
+            initContactModification(p);
             FillNewContactForm(newContact);
             submitContactModification();
             return this;
@@ -84,16 +84,37 @@ namespace WebAddressbookTests
             return this;
         }
 
-        private ContactHelper initContactModification()
+        private ContactHelper initContactModification(int p)
         {
-            driver.FindElement(By.XPath("id(\"maintable\")/tbody[1]/tr[7]/td[8]/a[1]/img[1]")).Click();
+
+
+            if (IsElementPresent(By.CssSelector("a[href*='edit.php?id=18']")))
+            {
+                driver.FindElement(By.CssSelector("a[href*='edit.php?id=18']")).Click();
+                //driver.FindElement(By.LinkText("http://localhost/addressbook/edit.php?id=" + p));
+                //driver.FindElement(By.Id(p.ToString())).Click();
+                //driver.FindElement(By.CssSelector("img[alt=\"Edit\"]")).Click();
+            }
+            else
+            {
+                Assert.Fail("Не могу найти контакт с id = " + p);
+            }
+            
             return this;
         }
 
         private ContactHelper RemoveContact(string p)
         {
-            driver.FindElement(By.XPath("//div[@id='content']/form[2]/div[2]/input")).Click();
-            Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            if (IsElementPresent(By.XPath("//div[@id='content']/form[2]/div[2]/input")))
+            {
+                driver.FindElement(By.XPath("//div[@id='content']/form[2]/div[2]/input")).Click();
+                Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            }
+            else
+            {
+                Assert.Fail("Не могу найти кнопку 'Delete', чтобы удалить контакт.");
+            }
+            
             return this;
         }
 
@@ -121,7 +142,14 @@ namespace WebAddressbookTests
 
         private void SelelectContact(string p)
         {
-            driver.FindElement(By.Id(p)).Click();
+            if (IsElementPresent(By.Id(p)))
+            {
+                driver.FindElement(By.Id(p)).Click();
+            }
+            else
+            {
+                Assert.Fail("Нет контакта с id = " + p);
+            }
         }
 
         public bool AcceptNextAlert
