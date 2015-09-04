@@ -19,7 +19,7 @@ namespace WebAddressbookTests
         public ApplicationManager()
         {
             driver = new FirefoxDriver();
-            baseURL = "http://localhost:8080";
+            baseURL = "http://localhost";
 
             loginHelper = new LoginHelper(this);
             navigator = new NavigationHelper(this, baseURL);
