@@ -35,17 +35,9 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int i)
         {
             manager.Navigator.GoToGroupsPage();
-            if (IsElementPresent(By.XPath("id(\"content\")/form[1]/span[" + i + "]/input[1]")))
-            {
-                SelectGroup(i);
-                RemoveGroup();
-                ReturnToGroupsPage();
-            }
-            else
-            {
-                Assert.Fail("Нет группы с id =" + i);
-            }
-            
+            SelectGroup(i);
+            RemoveGroup();
+            ReturnToGroupsPage();
             return this;
         }
         
@@ -91,14 +83,14 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            if (IsElementPresent(By.XPath("id(\"content\")/form[1]/span[" + index + "]/input[1]")))
+            if (IsElementPresent(By.XPath("id(\"content\")/form[1]/span[" + index + "]/input[1]")) == false)
             {
-                driver.FindElement(By.XPath("id(\"content\")/form[1]/span[" + index + "]/input[1]")).Click();
+                GroupData group = new GroupData("rrr");
+                Create(group);
             }
-            else
-            {
-                Assert.Fail("Нет группы с id =" + index);
-            }
+
+           manager.Navigator.GoToGroupsPage();
+           driver.FindElement(By.XPath("id(\"content\")/form[1]/span[" + index + "]/input[1]")).Click();
            return this;
         }
 

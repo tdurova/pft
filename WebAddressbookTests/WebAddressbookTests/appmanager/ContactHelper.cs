@@ -127,19 +127,6 @@ namespace WebAddressbookTests
             return this;
         }
 
-        private ContactHelper InitContactModification(int p)
-        {
-            if (IsElementPresent(By.CssSelector("a[href*='edit.php?id=" + p + "']")))
-            {
-                driver.FindElement(By.CssSelector("a[href*='edit.php?id=" + p + "']")).Click();
-            }
-            else
-            {
-                Assert.Fail("Не могу найти контакт с id = " + p);
-            }
-
-            return this;
-        }
 
         private ContactHelper RemoveContact(int p)
         {
@@ -178,18 +165,30 @@ namespace WebAddressbookTests
             }
         }
 
-        private void SelelectContact(int p)
+        private ContactHelper SelelectContact(int p)
         {
             if (IsElementPresent(By.XPath("//input[@name='selected[]']")) == false)
             {
                 System.Console.Out.Write("Нет ни одного контакта! Начинаем создание!");
-
                 ContactData contact = new ContactData("Ivan");
                 Create(contact);
-
             }
             manager.Navigator.GoToHomePage();
             driver.FindElement(By.XPath("//input[@name='selected[]']")).Click();
+            return this;
+        }
+
+        private ContactHelper InitContactModification(int p)
+        {
+            if (IsElementPresent(By.XPath("id(\"maintable\")/tbody[1]/tr[" + p++ + "]/td[8]/a[1]/img[1]")) == false)
+            {
+                System.Console.Out.Write("Нет ни одного контакта! Начинаем создание!");
+                ContactData contact = new ContactData("Ivan");
+                Create(contact);
+            }
+            manager.Navigator.GoToHomePage();
+            driver.FindElement(By.XPath("id(\"maintable\")/tbody[1]/tr[" + p++ + "]/td[8]/a[1]/img[1]")).Click();
+            return this;
         }
 
         public bool AcceptNextAlert
