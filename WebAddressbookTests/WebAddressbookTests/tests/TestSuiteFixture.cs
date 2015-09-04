@@ -18,11 +18,5 @@ namespace WebAddressbookTests
             ApplicationManager.GetInstance().Navigator.GoToHomePage();
             ApplicationManager.GetInstance().Auth.Login(new AccountData("admin", "secret"));
         }
-
-        [TearDown]
-        public void StopApplicationManager()
-        {
-            ApplicationManager.GetInstance().Stop();
-        }
     }
 }

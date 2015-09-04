@@ -2,6 +2,7 @@
 using System.Text;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using System.Threading;
 
 namespace WebAddressbookTests
 {
@@ -15,7 +16,8 @@ namespace WebAddressbookTests
         protected NavigationHelper navigator;
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
-        private static ApplicationManager instance;
+        
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager()
         {
@@ -28,13 +30,7 @@ namespace WebAddressbookTests
             contactHelper = new ContactHelper(this);
         }
 
-        public IWebDriver Driver
-        {
-            get { return driver; }
-            set {}
-        }
-
-        public void Stop()
+        ~ApplicationManager()
         {
             try
             {
@@ -44,6 +40,12 @@ namespace WebAddressbookTests
             {
                 // Ignore errors if unable to close the browser
             }
+        }
+
+        public IWebDriver Driver
+        {
+            get { return driver; }
+            set {}
         }
 
         public LoginHelper Auth
@@ -68,12 +70,12 @@ namespace WebAddressbookTests
 
         public static ApplicationManager GetInstance()
         {
-            if (instance == null)
+            if (! app.IsValueCreated)
             {
-                instance = new ApplicationManager();
+                app.Value = new ApplicationManager();
             }
 
-            return instance;
+            return app.Value;
         }
     }
 }
