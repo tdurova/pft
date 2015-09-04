@@ -15,8 +15,9 @@ namespace WebAddressbookTests
         protected NavigationHelper navigator;
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
+        private static ApplicationManager instance;
 
-        public ApplicationManager()
+        private ApplicationManager()
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost";
@@ -65,6 +66,14 @@ namespace WebAddressbookTests
             get { return contactHelper; }
         }
 
+        public static ApplicationManager GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new ApplicationManager();
+            }
 
+            return instance;
+        }
     }
 }

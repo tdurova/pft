@@ -63,6 +63,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="tests\TestSuiteFixture.cs" />
     <Compile Include="tests\Contact tests\ContactRemovalTests.cs" />
     <Compile Include="tests\Contact tests\ContactModificationTests.cs" />
     <Compile Include="tests\Group tests\GroupModificationTests.cs" />
