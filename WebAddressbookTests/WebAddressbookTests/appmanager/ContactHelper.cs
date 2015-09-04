@@ -88,12 +88,9 @@ namespace WebAddressbookTests
         {
 
 
-            if (IsElementPresent(By.CssSelector("a[href*='edit.php?id=18']")))
+            if (IsElementPresent(By.CssSelector("a[href*='edit.php?id=" + p + "']")))
             {
-                driver.FindElement(By.CssSelector("a[href*='edit.php?id=18']")).Click();
-                //driver.FindElement(By.LinkText("http://localhost/addressbook/edit.php?id=" + p));
-                //driver.FindElement(By.Id(p.ToString())).Click();
-                //driver.FindElement(By.CssSelector("img[alt=\"Edit\"]")).Click();
+                driver.FindElement(By.CssSelector("a[href*='edit.php?id=" + p + "']")).Click();
             }
             else
             {
