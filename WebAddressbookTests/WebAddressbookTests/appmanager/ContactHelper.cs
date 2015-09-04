@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 using OpenQA.Selenium;
 
@@ -31,7 +32,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Remove(string p)
+        public ContactHelper Remove(int p)
         {
             manager.Navigator.GoToHomePage();
             SelelectContact(p);
@@ -54,29 +55,46 @@ namespace WebAddressbookTests
 
         public ContactHelper FillNewContactForm(ContactData contact)
         {
-            if (IsElementPresent(By.Name("firstname")) && IsElementPresent(By.Name("lastname")))
+            if (IsElementPresent(By.Name("firstname")))
             {
                 Type(By.Name("firstname"), contact.Firstname);
-                Type(By.Name("middlename"), contact.Middlename);
-                Type(By.Name("lastname"), contact.Lastname);
-                Type(By.Name("nickname"), contact.Nickname);
-                Type(By.Name("photo"), contact.Photo);
-                Type(By.Name("company"), contact.Company);
-                Type(By.Name("title"), contact.Title);
-                Type(By.Name("address"), contact.Address);
-                Type(By.Name("home"), contact.Home);
-                Type(By.Name("mobile"), contact.Mobile);
-                Type(By.Name("work"), contact.Work);
-                Type(By.Name("email"), contact.Email);
 
-                SelectElementInList(By.Name("bday"), contact.Bday);
-                SelectElementInList(By.Name("bmonth"), contact.Bmonth);
-                //new SelectElement(driver.FindElement(By.Name("bmonth"))).SelectByText(contact.Bmonth);       
-
-                Type(By.Name("byear"), contact.Byear);
-                Type(By.Name("address2"), contact.Address2);
-                Type(By.Name("phone2"), contact.Phone2);
-                Type(By.Name("notes"), contact.Notes);
+               /* if (IsElementPresent(By.Name("middlename")) 
+                    && IsElementPresent(By.Name("lastname"))
+                    && IsElementPresent(By.Name("nickname"))
+                    && IsElementPresent(By.Name("photo"))
+                    && IsElementPresent(By.Name("company"))
+                    && IsElementPresent(By.Name("title"))
+                    && IsElementPresent(By.Name("address"))
+                    && IsElementPresent(By.Name("home"))
+                    && IsElementPresent(By.Name("email"))
+                    && IsElementPresent(By.Name("bday"))
+                    && IsElementPresent(By.Name("bmonth"))
+                    && IsElementPresent(By.Name("byear"))
+                    && IsElementPresent(By.Name("address2"))
+                    && IsElementPresent(By.Name("phone2"))
+                    && IsElementPresent(By.Name("notes"))
+                    )
+                {
+                    Type(By.Name("middlename"), contact.Middlename);
+                    Type(By.Name("lastname"), contact.Lastname);
+                    Type(By.Name("nickname"), contact.Nickname);
+                    Type(By.Name("photo"), contact.Photo);
+                    Type(By.Name("company"), contact.Company);
+                    Type(By.Name("title"), contact.Title);
+                    Type(By.Name("address"), contact.Address);
+                    Type(By.Name("home"), contact.Home);
+                    Type(By.Name("mobile"), contact.Mobile);
+                    Type(By.Name("work"), contact.Work);
+                    Type(By.Name("email"), contact.Email);
+                    SelectElementInList(By.Name("bday"), contact.Bday);
+                    SelectElementInList(By.Name("bmonth"), contact.Bmonth);
+                    //new SelectElement(driver.FindElement(By.Name("bmonth"))).SelectByText(contact.Bmonth);       
+                    Type(By.Name("byear"), contact.Byear);
+                    Type(By.Name("address2"), contact.Address2);
+                    Type(By.Name("phone2"), contact.Phone2);
+                    Type(By.Name("notes"), contact.Notes);
+                } */
             }
 
             return this;
@@ -123,7 +141,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        private ContactHelper RemoveContact(string p)
+        private ContactHelper RemoveContact(int p)
         {
             if (IsElementPresent(By.XPath("//div[@id='content']/form[2]/div[2]/input")))
             {
@@ -160,16 +178,18 @@ namespace WebAddressbookTests
             }
         }
 
-        private void SelelectContact(string p)
+        private void SelelectContact(int p)
         {
-            if (IsElementPresent(By.Id(p)))
+            if (IsElementPresent(By.XPath("//input[@name='selected[]']")) == false)
             {
-                driver.FindElement(By.Id(p)).Click();
+                System.Console.Out.Write("Нет ни одного контакта! Начинаем создание!");
+
+                ContactData contact = new ContactData("Ivan");
+                Create(contact);
+
             }
-            else
-            {
-                Assert.Fail("Нет контакта с id = " + p);
-            }
+            manager.Navigator.GoToHomePage();
+            driver.FindElement(By.XPath("//input[@name='selected[]']")).Click();
         }
 
         public bool AcceptNextAlert

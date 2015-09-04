@@ -12,7 +12,8 @@ namespace WebAddressbookTests
             newData.Header = "ttt";
             newData.Footer = "qqq";
 
-            app.Groups.Modify(100, newData);
+            // выбираем группу с порядковым номером 1
+            app.Groups.Modify(1, newData);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int i)
         {
             manager.Navigator.GoToGroupsPage();
-            if (IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + i + "]")))
+            if (IsElementPresent(By.XPath("id(\"content\")/form[1]/span[" + i + "]/input[1]")))
             {
                 SelectGroup(i);
                 RemoveGroup();
@@ -77,15 +77,23 @@ namespace WebAddressbookTests
 
         public GroupHelper RemoveGroup()
         {
-            driver.FindElement(By.XPath("(//input[@name='delete'])[2]")).Click();
+            if (IsElementPresent(By.XPath("(//input[@name='delete'])[2]")))
+            {
+                driver.FindElement(By.XPath("(//input[@name='delete'])[2]")).Click();
+            }
+            else
+            {
+                Assert.Fail("Не могу найти кнопку удаления группы 'Delete'");
+            }
+            
             return this;
         }
 
         public GroupHelper SelectGroup(int index)
         {
-            if (IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
+            if (IsElementPresent(By.XPath("id(\"content\")/form[1]/span[" + index + "]/input[1]")))
             {
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+                driver.FindElement(By.XPath("id(\"content\")/form[1]/span[" + index + "]/input[1]")).Click();
             }
             else
             {
