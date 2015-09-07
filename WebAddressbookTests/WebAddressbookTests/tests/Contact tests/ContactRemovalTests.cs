@@ -15,12 +15,16 @@ namespace WebAddressbookTests
 
             Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactListCount());
 
-            List<ContactData> newComtacts = app.Contacts.GetContactList();
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            
             oldContacts.RemoveAt(0);
 
-            Assert.AreEqual(oldContacts, newComtacts);
-
+            Assert.AreEqual(oldContacts, newContacts);
+           
+           /* foreach (ContactData group in newContacts)
+            {
+                Assert.AreNotEqual(group.Id, oldContacts[0].Id);
+            } */
         }
-
     }
 }

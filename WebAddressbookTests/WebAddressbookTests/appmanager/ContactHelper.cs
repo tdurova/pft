@@ -205,7 +205,7 @@ namespace WebAddressbookTests
         
         public List<ContactData> GetContactList()
         {
-            if (_contactCash == null)
+                if (_contactCash == null)
             {
                 _contactCash = new List<ContactData>();
                 manager.Navigator.GoToHomePage();
@@ -214,7 +214,11 @@ namespace WebAddressbookTests
                 foreach (IWebElement element in elements)
                 {
                     List<IWebElement> cells = new List<IWebElement>(element.FindElements(By.TagName("td")));
-                    _contactCash.Add(new ContactData(cells[2].Text));
+
+                    _contactCash.Add(new ContactData(cells[2].Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("id")
+                    });
                 }
             }
             

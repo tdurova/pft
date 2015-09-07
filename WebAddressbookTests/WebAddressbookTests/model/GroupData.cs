@@ -4,14 +4,24 @@ namespace WebAddressbookTests
 {
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
-        private string name;
-        private string header = "";
-        private string footer = "";
+        public string Name { set; get; }
+        public string Header { set; get; }
+        public string Footer { set; get; }
+
+        public string Id { get; set; }
 
         //конструктор 1
         public GroupData(string name)
         {
-            this.name = name;
+            Name = name;
+        }
+
+        //конструктор 2
+        public GroupData(string name, string header, string footer)
+        {
+            Name = name;
+            Header = header;
+            Footer = footer;
         }
 
         public bool Equals(GroupData other)
@@ -45,32 +55,6 @@ namespace WebAddressbookTests
                 return 1; //текущий объект больше
             }
             return Name.CompareTo(other.Name);
-        }
-
-        //конструктор 2
-        public GroupData(string name, string header, string footer)
-        {
-            this.name = name;
-            this.name = header;
-            this.name = footer;
-        }
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-
-        public string Header
-        {
-            get { return header; }
-            set { header = value; }
-        }
-
-        public string Footer
-        {
-            get { return footer; }
-            set { footer = value;}
         }
     }
 }

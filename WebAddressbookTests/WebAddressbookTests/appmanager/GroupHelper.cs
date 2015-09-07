@@ -112,7 +112,7 @@ namespace WebAddressbookTests
 
 
         private List<GroupData> _groupCash = null;
-        
+
         public List<GroupData> GetGroupList()
         {
             if (_groupCash == null)
@@ -120,9 +120,13 @@ namespace WebAddressbookTests
                 _groupCash = new List<GroupData>();
                 manager.Navigator.GoToGroupsPage();
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                
                 foreach (IWebElement element in elements)
                 {
-                    _groupCash.Add(new GroupData(element.Text));
+                    _groupCash.Add(new GroupData(element.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
                 }
             }
 
@@ -130,9 +134,10 @@ namespace WebAddressbookTests
             return new List<GroupData>(_groupCash);
         }
 
+
         public int GetGroupListCount()
         {
-            return driver.FindElements(By.CssSelector("span.group")).Count; 
+            return driver.FindElements(By.CssSelector("span.group")).Count;
         }
     }
 }

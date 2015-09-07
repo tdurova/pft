@@ -50,6 +50,7 @@ namespace WebAddressbookTests
         }
 
         [Test]
+        //Этот тест "находит" баг создания группы, и поэтому падает
         public void BadNameGroupCreationTest()
         {
             GroupData group = new GroupData("a'a");
