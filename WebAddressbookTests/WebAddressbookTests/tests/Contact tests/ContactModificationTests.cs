@@ -31,11 +31,13 @@ namespace WebAddressbookTests
                 Email = ""
             };
 
-            List<ContactData> oldContacts = app.Contact.GetContactList();
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
            
-            app.Contact.Modify(1, newContact);
+            app.Contacts.Modify(1, newContact);
 
-            List<ContactData> newContacts = app.Contact.GetContactList();
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactListCount());
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts[0].Firstname = newContact.Firstname;
             oldContacts.Sort();
             newContacts.Sort();

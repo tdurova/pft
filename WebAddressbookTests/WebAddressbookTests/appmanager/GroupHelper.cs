@@ -59,6 +59,7 @@ namespace WebAddressbookTests
         public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            _groupCash = null;
             return this;
         }
 
@@ -73,6 +74,7 @@ namespace WebAddressbookTests
             if (IsElementPresent(By.XPath("(//input[@name='delete'])[2]")))
             {
                 driver.FindElement(By.XPath("(//input[@name='delete'])[2]")).Click();
+                _groupCash = null;
             }
             else
             {
@@ -98,6 +100,7 @@ namespace WebAddressbookTests
         public GroupHelper submitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            _groupCash = null;
             return this;
         }
 
@@ -107,17 +110,29 @@ namespace WebAddressbookTests
             return this;
         }
 
+
+        private List<GroupData> _groupCash = null;
+        
         public List<GroupData> GetGroupList()
         {
-            List<GroupData> groups = new List<GroupData>();
-            manager.Navigator.GoToGroupsPage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-            foreach (IWebElement element in elements)
+            if (_groupCash == null)
             {
-                groups.Add(new GroupData(element.Text));
+                _groupCash = new List<GroupData>();
+                manager.Navigator.GoToGroupsPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                foreach (IWebElement element in elements)
+                {
+                    _groupCash.Add(new GroupData(element.Text));
+                }
             }
 
-            return groups;
+            //отдаем не сам кэш, а только его копию, чтобы никто не повредил оригинал
+            return new List<GroupData>(_groupCash);
+        }
+
+        public int GetGroupListCount()
+        {
+            return driver.FindElements(By.CssSelector("span.group")).Count; 
         }
     }
 }

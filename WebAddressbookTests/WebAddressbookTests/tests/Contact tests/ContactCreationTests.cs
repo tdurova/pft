@@ -17,11 +17,13 @@ namespace WebAddressbookTests
                 Mobile = "", Home = "", Phone2 = "", Byear = "1990", Notes = "testnotes", Email = ""
             };
 
-            List<ContactData> oldContacts = app.Contact.GetContactList();
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
 
-            app.Contact.Create(contact);
+            app.Contacts.Create(contact);
 
-            List<ContactData> newContacts = app.Contact.GetContactList();
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactListCount());
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort(); 

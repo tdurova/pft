@@ -106,6 +106,7 @@ namespace WebAddressbookTests
             if (IsElementPresent(By.XPath("//div[@id='content']/form/input[21]")))
             {
                 driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+                _contactCash = null;
             }
             else
             {
@@ -120,6 +121,7 @@ namespace WebAddressbookTests
             if (IsElementPresent(By.Name("update")))
             {
                 driver.FindElement(By.Name("update")).Click();
+                _contactCash = null;
             }
             else
             {
@@ -135,6 +137,7 @@ namespace WebAddressbookTests
             {
                 driver.FindElement(By.XPath("//div[@id='content']/form[2]/div[2]/input")).Click();
                 Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+                _contactCash = null;
             }
             else
             {
@@ -198,21 +201,31 @@ namespace WebAddressbookTests
             set { _acceptNextAlert = value; }
         }
 
+        private List<ContactData> _contactCash = null;
+        
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomePage();
-            
-            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
-            
-            foreach (IWebElement element in elements)
+            if (_contactCash == null)
             {
-                List<IWebElement> cells = new List<IWebElement>(element.FindElements(By.TagName("td")));
-                contacts.Add(new ContactData(cells[2].Text));          
+                _contactCash = new List<ContactData>();
+                manager.Navigator.GoToHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
+
+                foreach (IWebElement element in elements)
+                {
+                    List<IWebElement> cells = new List<IWebElement>(element.FindElements(By.TagName("td")));
+                    _contactCash.Add(new ContactData(cells[2].Text));
+                }
             }
-                        
-            return contacts;
+            
+            return new List<ContactData>(_contactCash);
         }
 
+
+        public int GetContactListCount()
+        {
+            manager.Navigator.GoToHomePage();
+            return driver.FindElements(By.XPath("//tr[@name='entry']")).Count;
+        }
     }
 }

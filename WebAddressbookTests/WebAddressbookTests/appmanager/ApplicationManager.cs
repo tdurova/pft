@@ -14,7 +14,7 @@ namespace WebAddressbookTests
         protected LoginHelper loginHelper;
         protected NavigationHelper navigator;
         protected GroupHelper groupHelper;
-        protected ContactHelper contactHelper;
+        protected ContactHelper ContactsHelper;
         
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -26,7 +26,7 @@ namespace WebAddressbookTests
             loginHelper = new LoginHelper(this);
             navigator = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
-            contactHelper = new ContactHelper(this);
+            ContactsHelper = new ContactHelper(this);
         }
 
         ~ApplicationManager()
@@ -74,9 +74,9 @@ namespace WebAddressbookTests
             get { return groupHelper; }
         }
 
-        public ContactHelper Contact
+        public ContactHelper Contacts
         {
-            get { return contactHelper; }
+            get { return ContactsHelper; }
         }
     }
 }

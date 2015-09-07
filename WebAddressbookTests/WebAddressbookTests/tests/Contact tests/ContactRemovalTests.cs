@@ -9,12 +9,13 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            List<ContactData> oldContacts = app.Contact.GetContactList();
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
             
-            app.Contact.Remove();
+            app.Contacts.Remove();
 
-            List<ContactData> newComtacts = app.Contact.GetContactList();
+            Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactListCount());
 
+            List<ContactData> newComtacts = app.Contacts.GetContactList();
             oldContacts.RemoveAt(0);
 
             Assert.AreEqual(oldContacts, newComtacts);
