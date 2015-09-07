@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 
 namespace WebAddressbookTests
@@ -75,7 +76,7 @@ namespace WebAddressbookTests
             }
             else
             {
-                Assert.Fail("Не могу найти кнопку удаления группы 'Delete'");
+                Assert.Fail("Не могу найти КНОПКУ удаления группы 'Delete'");
             }
             
             return this;
@@ -83,14 +84,14 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            if (IsElementPresent(By.XPath("id(\"content\")/form[1]/span[" + index + "]/input[1]")) == false)
+            if (IsElementPresent(By.XPath("id(\"content\")/form[1]/span[" + (index+1) + "]/input[1]")) == false)
             {
                 GroupData group = new GroupData("rrr");
                 Create(group);
             }
 
            manager.Navigator.GoToGroupsPage();
-           driver.FindElement(By.XPath("id(\"content\")/form[1]/span[" + index + "]/input[1]")).Click();
+           driver.FindElement(By.XPath("id(\"content\")/form[1]/span[" + (index+1) + "]/input[1]")).Click();
            return this;
         }
 
@@ -104,6 +105,19 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("edit")).Click();
             return this;
+        }
+
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigator.GoToGroupsPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+
+            return groups;
         }
     }
 }

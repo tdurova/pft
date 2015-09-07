@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -7,13 +8,13 @@ namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
-        private bool _acceptNextAlert = true;
-
         public ContactHelper(ApplicationManager manager)
             : base(manager)
         {
         }
-
+        
+        private bool _acceptNextAlert = true;
+        
         public ContactHelper Create(ContactData contact)
         {
             manager.Navigator.GoToHomePage();
@@ -32,11 +33,11 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Remove(int p)
+        public ContactHelper Remove()
         {
             manager.Navigator.GoToHomePage();
-            SelelectContact(p);
-            RemoveContact(p);
+            SelelectContact();
+            RemoveContact();
             return this;
         }
 
@@ -128,7 +129,7 @@ namespace WebAddressbookTests
         }
 
 
-        private ContactHelper RemoveContact(int p)
+        private ContactHelper RemoveContact()
         {
             if (IsElementPresent(By.XPath("//div[@id='content']/form[2]/div[2]/input")))
             {
@@ -165,11 +166,11 @@ namespace WebAddressbookTests
             }
         }
 
-        private ContactHelper SelelectContact(int p)
+        private ContactHelper SelelectContact()
         {
             if (IsElementPresent(By.XPath("//input[@name='selected[]']")) == false)
             {
-                System.Console.Out.Write("Нет ни одного контакта! Начинаем создание!");
+                Console.Out.Write("Нет ни одного контакта! Начинаем создание!");
                 ContactData contact = new ContactData("Ivan");
                 Create(contact);
             }
@@ -182,7 +183,7 @@ namespace WebAddressbookTests
         {
             if (IsElementPresent(By.XPath("id(\"maintable\")/tbody[1]/tr[" + p++ + "]/td[8]/a[1]/img[1]")) == false)
             {
-                System.Console.Out.Write("Нет ни одного контакта! Начинаем создание!");
+                Console.Out.Write("Нет ни одного контакта! Начинаем создание!");
                 ContactData contact = new ContactData("Ivan");
                 Create(contact);
             }
@@ -195,6 +196,18 @@ namespace WebAddressbookTests
         {
             get { return _acceptNextAlert; }
             set { _acceptNextAlert = value; }
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=\"entry\"]"));
+            foreach (IWebElement element in elements)
+            {
+                contacts.Add(new ContactData(element.Text));
+            }
+            return contacts;
         }
     }
 }

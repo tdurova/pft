@@ -1,6 +1,9 @@
-﻿namespace WebAddressbookTests
+﻿using System;
+using NUnit.Framework.Constraints;
+
+namespace WebAddressbookTests
 {
-    public class ContactData
+    public class ContactData : IEquatable<ContactData>
     {
         private string middlename = "";
         private string lastname = "";
@@ -75,5 +78,24 @@
         public string Phone2 { get; set; }
         public string Notes { get; set; }
 
+        public bool Equals(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return false;
+            }
+            if (Object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            return Firstname == other.Firstname; 
+            //return Lastname == other.Lastname;
+        }
     }
+
+    /*   public override int GetHashCode()
+        {
+            return Firstname.GetHashCode();
+        } */
 }

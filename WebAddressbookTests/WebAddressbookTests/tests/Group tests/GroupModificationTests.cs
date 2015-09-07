@@ -13,7 +13,7 @@ namespace WebAddressbookTests
             newData.Footer = "qqq";
 
             // выбираем группу с порядковым номером 1
-            app.Groups.Modify(1, newData);
+            app.Groups.Modify(0, newData);
         }
     }
 }
