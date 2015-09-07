@@ -14,6 +14,7 @@ namespace WebAddressbookTests
             newData.Footer = "qqq";
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
+            GroupData oldData = oldGroups[0];
 
             // выбираем группу с порядковым номером 1
             app.Groups.Modify(0, newData);
@@ -27,6 +28,13 @@ namespace WebAddressbookTests
 
             Assert.AreEqual(oldGroups, newGroups);
 
+            foreach (GroupData group in newGroups)
+            {
+                if (group.Id == oldData.Id)
+                {
+                    Assert.AreEqual(newData.Name, group.Name);
+                }
+            }
         }
     }
 }
