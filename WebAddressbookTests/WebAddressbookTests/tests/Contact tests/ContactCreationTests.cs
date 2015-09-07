@@ -19,10 +19,10 @@ namespace WebAddressbookTests
             
             List<ContactData> oldContacts = app.Contact.GetContactList();
 
-            /*app.Contact.Create(contact);
+            app.Contact.Create(contact);
 
             List<ContactData> newContacts = app.Contact.GetContactList();
-            Assert.AreEqual(oldContacts.Count + 1, newContacts.Count);    */ 
+            Assert.AreEqual(oldContacts.Count + 1, newContacts.Count); 
         }
     }
 }

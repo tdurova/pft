@@ -90,11 +90,11 @@ namespace WebAddressbookTests
             }
 
             return Firstname == other.Firstname; 
-            //return Lastname == other.Lastname;
+            return Lastname == other.Lastname;
         }
     }
 
-    /*   public override int GetHashCode()
+      /* public override int GetHashCode()
         {
             return Firstname.GetHashCode();
         } */
