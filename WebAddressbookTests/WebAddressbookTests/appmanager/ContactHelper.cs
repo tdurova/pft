@@ -181,14 +181,14 @@ namespace WebAddressbookTests
 
         private ContactHelper InitContactModification(int p)
         {
-            if (IsElementPresent(By.XPath("id(\"maintable\")/tbody[1]/tr[" + p++ + "]/td[8]/a[1]/img[1]")) == false)
+            if (IsElementPresent(By.XPath("//tr[@name='entry']//img[@alt='Edit']")) == false)
             {
                 Console.Out.Write("Нет ни одного контакта! Начинаем создание!");
                 ContactData contact = new ContactData("Ivan");
                 Create(contact);
             }
             manager.Navigator.GoToHomePage();
-            driver.FindElement(By.XPath("id(\"maintable\")/tbody[1]/tr[" + p++ + "]/td[8]/a[1]/img[1]")).Click();
+            driver.FindElement(By.XPath("//tr[@name='entry']//img[@alt='Edit']")).Click();
             return this;
         }
 
@@ -202,12 +202,17 @@ namespace WebAddressbookTests
         {
             List<ContactData> contacts = new List<ContactData>();
             manager.Navigator.GoToHomePage();
+            
             ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
+            
             foreach (IWebElement element in elements)
             {
-                contacts.Add(new ContactData(element.Text));
+                List<IWebElement> cells = new List<IWebElement>(element.FindElements(By.TagName("td")));
+                contacts.Add(new ContactData(cells[2].Text));          
             }
+                        
             return contacts;
         }
+
     }
 }

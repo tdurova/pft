@@ -35,14 +35,13 @@ namespace WebAddressbookTests
            
             app.Contact.Modify(1, newContact);
 
-
             List<ContactData> newContacts = app.Contact.GetContactList();
             oldContacts[0].Firstname = newContact.Firstname;
-            oldContacts[0].Title = newContact.Title;
             oldContacts.Sort();
             newContacts.Sort();
 
             Assert.AreEqual(oldContacts, newContacts);
+
         }
     }
 }
