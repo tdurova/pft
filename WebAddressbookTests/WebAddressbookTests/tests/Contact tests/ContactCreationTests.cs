@@ -9,7 +9,9 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-           //Создаем объект класса ContactData и задаем значения переменных
+            List<ContactData> oldContacts = app.Contact.GetContactList();
+            
+            //Создаем объект класса ContactData и задаем значения переменных
             ContactData contact = new ContactData("Ivan")
             {
                 Title = "", Company = "", Nickname = "", Lastname = "", Middlename = "Vitalievich", 
@@ -17,12 +19,14 @@ namespace WebAddressbookTests
                 Mobile = "", Home = "", Phone2 = "", Byear = "1990", Notes = "testnotes", Email = ""
             };
             
-            List<ContactData> oldContacts = app.Contact.GetContactList();
-
             app.Contact.Create(contact);
 
             List<ContactData> newContacts = app.Contact.GetContactList();
-            Assert.AreEqual(oldContacts.Count + 1, newContacts.Count); 
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort(); 
+
+            Assert.AreEqual(oldContacts, newContacts); 
         }
     }
 }

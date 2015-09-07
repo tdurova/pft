@@ -2,7 +2,7 @@
 
 namespace WebAddressbookTests
 {
-    public class GroupData : IEquatable<GroupData>
+    public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
         private string name;
         private string header = "";
@@ -33,6 +33,20 @@ namespace WebAddressbookTests
             return Name.GetHashCode();
         }
 
+        public override string ToString()
+        {
+            return "name=" + Name;
+        }
+
+        public int CompareTo(GroupData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1; //текущий объект больше
+            }
+            return Name.CompareTo(other.Name);
+        }
+
         //конструктор 2
         public GroupData(string name, string header, string footer)
         {
@@ -50,13 +64,13 @@ namespace WebAddressbookTests
         public string Header
         {
             get { return header; }
-            set { name = value; }
+            set { header = value; }
         }
 
         public string Footer
         {
             get { return footer; }
-            set { name = value; }
+            set { footer = value;}
         }
     }
 }

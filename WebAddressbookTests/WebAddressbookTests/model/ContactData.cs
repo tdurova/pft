@@ -3,7 +3,7 @@ using NUnit.Framework.Constraints;
 
 namespace WebAddressbookTests
 {
-    public class ContactData : IEquatable<ContactData>
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string middlename = "";
         private string lastname = "";
@@ -21,7 +21,9 @@ namespace WebAddressbookTests
         private string address2 = "";
         private string phone2 = "";
         private string notes = "";
-       
+
+        public string Firstname { get; set; }
+
         //конструктор 1
         public ContactData(string firstname)
         {
@@ -29,8 +31,10 @@ namespace WebAddressbookTests
         }
 
         //конструктор 2
-        public ContactData(string firstname, string middlename, string lastname, string nickname, string photo, string company, string title, string address, 
-            string home, string mobile, string work, string email, string bday, string bmonth, string byear, string address2, string phone2, string notes)
+        public ContactData(string firstname, string middlename, string lastname, string nickname, string photo,
+            string company, string title, string address,
+            string home, string mobile, string work, string email, string bday, string bmonth, string byear,
+            string address2, string phone2, string notes)
         {
             Firstname = firstname;
             Middlename = middlename;
@@ -52,8 +56,6 @@ namespace WebAddressbookTests
             Notes = notes;
         }
 
-        public string Firstname { get; set; }
-
         //оставила в "в старом стиле" с дополнительным полем middlename, но можно и автопроперти { get; set; } использовать
         public string Middlename
         {
@@ -70,8 +72,8 @@ namespace WebAddressbookTests
         public string Home { get; set; }
         public string Mobile { get; set; }
         public string Work { get; set; }
-        public string Email {get;set;}
-        public string Bday {get;set;}    
+        public string Email { get; set; }
+        public string Bday { get; set; }
         public string Bmonth { get; set; }
         public string Byear { get; set; }
         public string Address2 { get; set; }
@@ -89,13 +91,27 @@ namespace WebAddressbookTests
                 return true;
             }
 
-            return Firstname == other.Firstname; 
-            return Lastname == other.Lastname;
+            return Firstname == other.Firstname;
         }
-    }
 
-      /* public override int GetHashCode()
+
+        public int CompareTo(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1; //текущий объект больше
+            }
+            return Firstname.CompareTo(other.Firstname);
+        }
+
+        public override string ToString()
+        {
+            return Firstname;
+        }
+
+        public override int GetHashCode()
         {
             return Firstname.GetHashCode();
-        } */
+        }
+    }
 }
