@@ -32,14 +32,14 @@ namespace WebAddressbookTests
             };
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
-            ContactData oldData = oldContacts[0];
+            ContactData oldContact = oldContacts[0];
            
             app.Contacts.Modify(1, newContact);
 
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactListCount());
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
-            oldContacts[0].Firstname = newContact.Firstname;
+            oldContact.Firstname = newContact.Firstname;
             oldContacts.Sort();
             newContacts.Sort();
 
@@ -47,7 +47,7 @@ namespace WebAddressbookTests
 
             foreach (ContactData contact in newContacts)
             {
-                if (contact.Id == oldData.Id)
+                if (contact.Id == oldContact.Id)
                 {
                     Assert.AreEqual(newContact.Firstname, contact.Firstname);
                 }
