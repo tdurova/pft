@@ -123,14 +123,28 @@ namespace WebAddressbookTests
                 
                 foreach (IWebElement element in elements)
                 {
-                    _groupCash.Add(new GroupData(element.Text)
+                    _groupCash.Add(new GroupData(null)
                     {
                         Id = element.FindElement(By.TagName("input")).GetAttribute("value")
                     });
                 }
+
+                // работа со строками из  5_2
+                string allGroupNames = driver.FindElement(By.CssSelector("div#content form")).Text;
+                string[] parts = allGroupNames.Split('\n');
+                int shift = _groupCash.Count - parts.Length;
+                for (int i = 0; i < _groupCash.Count; i++)
+                {
+                    if (i < shift)
+                    {
+                        _groupCash[i].Name = "";
+                    }
+                    else
+                        _groupCash[i].Name = parts[i - shift].Trim();
+                }
             }
 
-            //отдаем не сам кэш, а только его копию, чтобы никто не повредил оригинал
+            // отдаем не сам кэш, а только его копию, чтобы никто не повредил оригинал
             return new List<GroupData>(_groupCash);
         }
 

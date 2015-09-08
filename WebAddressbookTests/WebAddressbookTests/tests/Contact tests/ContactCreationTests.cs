@@ -13,8 +13,8 @@ namespace WebAddressbookTests
             ContactData contact = new ContactData("Ivan")
             {
                 Title = "", Company = "", Nickname = "", Lastname = "", Middlename = "Vitalievich", 
-                Work = "", Address2 = "", Bmonth = "January", Bday = "1", Photo = "", Address = "", 
-                Mobile = "", Home = "", Phone2 = "", Byear = "1990", Notes = "testnotes", Email = ""
+                WorkPhone = "", Address2 = "", Bmonth = "January", Bday = "1", Photo = "", Address = "", 
+                MobilePhone = "", HomePhone = "", Phone2 = "", Byear = "1990", Notes = "testnotes", Email = ""
             };
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();

@@ -16,14 +16,15 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupListCount());
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
+            
+            oldGroups.RemoveAt(0);
+
+            Assert.AreEqual(oldGroups, newGroups);
 
             foreach (GroupData group in newGroups)
             {
                 Assert.AreNotEqual(group.Id, oldData.Id);
             }
-
-            oldGroups.RemoveAt(0);
-            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

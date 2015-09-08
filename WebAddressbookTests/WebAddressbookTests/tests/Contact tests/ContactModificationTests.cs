@@ -16,25 +16,27 @@ namespace WebAddressbookTests
                 Nickname = "",
                 Lastname = "",
                 Middlename = "Vitalievich",
-                Work = "",
+                WorkPhone = "",
                 Address2 = "",
                 Bmonth = "January",
                 Bday = "1",
                 //пыталась прицепить картинку локальную - не получилось =(
                 Photo = "",
                 Address = "",
-                Mobile = "",
-                Home = "",
+                MobilePhone = "",
+                HomePhone = "",
                 Phone2 = "",
                 Byear = "",
                 Notes = "testnotes",
                 Email = ""
             };
 
+            int contactForChange = 0;
+
             List<ContactData> oldContacts = app.Contacts.GetContactList();
-            ContactData oldContact = oldContacts[0];
-           
-            app.Contacts.Modify(1, newContact);
+            ContactData oldContact = oldContacts[contactForChange];
+
+            app.Contacts.Modify(contactForChange, newContact);
 
             Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactListCount());
 
