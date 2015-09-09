@@ -45,7 +45,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanupCode(HomePhone) + CleanupCode(MobilePhone) + CleanupCode(WorkPhone)).Trim();
+                    return (CleanupCode(HomePhone) + CleanupCode(MobilePhone) + CleanupCode(WorkPhone) + CleanupCode(Phone2)).Trim();
                 }
             }
             set { _allPhones = value; }
@@ -72,7 +72,7 @@ namespace WebAddressbookTests
 
 H: {7}
 M: {8}
-W: {9}
+tanyatestW: {9}
 F: {10}
 
 {11}
