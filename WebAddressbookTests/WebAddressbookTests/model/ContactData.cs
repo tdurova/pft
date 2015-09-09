@@ -33,7 +33,8 @@ namespace WebAddressbookTests
         public string Homepage { get; set; }
         public string Phone2 { get; set; }
         public string Notes { get; set; }
-
+        public int Age { get; set; }
+        public int AnniversaryAge { get; set; }
 
         public string AllPhones
         {
@@ -72,7 +73,7 @@ namespace WebAddressbookTests
 
 H: {7}
 M: {8}
-tanyatestW: {9}
+W: {9}
 F: {10}
 
 {11}
@@ -81,16 +82,15 @@ F: {10}
 Homepage:
 {14}
 
-Birthday {15}.{16}.{17}
-Anniversary{18}.{19}.{20}
+Birthday {15}. {16} {17} ({24})
+Anniversary {18}. {19} {20} ({25})
 
 {21}
 
-{22}
+P: {22}
 
-{23}
-", this,Middlename,Lastname,Nickname, Title, Company, Address, HomePhone, MobilePhone, WorkPhone, Fax,
- Email, Email2, Email3, Homepage, Bday, Bmonth, Byear, Aday, Amonth, Ayear, Address2, Phone2, Notes);
+{23}", this,Middlename,Lastname,Nickname, Title, Company, Address, HomePhone, MobilePhone, WorkPhone, Fax,
+ Email, Email2, Email3, Homepage, Bday, Bmonth, Byear, Aday, Amonth, Ayear, Address2, Phone2, Notes, Age, AnniversaryAge);
                     
                     
                     return textToreturn;

@@ -263,6 +263,9 @@ namespace WebAddressbookTests
             string phone2 = driver.FindElement(By.Name("phone2")).GetAttribute("value");
             string notes = driver.FindElement(By.Name("notes")).GetAttribute("value");
 
+            int age = GetYearsDiffers(String.Format("{0}.{1}.{2}",bday,bmonth,byear));
+            int anniversaryAge = GetYearsDiffers(String.Format("{0}.{1}.{2}", aday, amonth, ayear));
+            
             return new ContactData(firstName)
             {
                 Middlename = middlename,
@@ -287,10 +290,28 @@ namespace WebAddressbookTests
                 Ayear = ayear,
                 Address2 = address2,
                 Phone2 = phone2,
-                Notes = notes
+                Notes = notes,
+                Age = age,
+                AnniversaryAge = anniversaryAge
             };
         }
-        
+
+        private int GetYearsDiffers(string date)
+        {
+            DateTime now = DateTime.Now;
+            if (date != null)
+            {
+                DateTime dateTime = Convert.ToDateTime(date);
+                if (dateTime > now)
+                {
+                    Assert.Fail("Человек еще не родился! " + dateTime + " > " + now);
+                }
+                else
+                    return new DateTime((now - dateTime).Ticks).Year - 1;
+            }
+            return 0;
+        }
+
         public ContactData GetContactInformationFromTable(int index)
         {
             manager.Navigator.GoToHomePage();

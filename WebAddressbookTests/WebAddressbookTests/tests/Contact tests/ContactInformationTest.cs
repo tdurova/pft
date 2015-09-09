@@ -35,7 +35,7 @@ namespace WebAddressbookTests
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(contactForAssert);
             Console.WriteLine("Was:\n" + fromForm.AllContactInfoFromForm);
             Console.WriteLine("Expected:\n" + fromView);
-            //Assert.AreEqual(fromView, fromForm.AllContactInfoFromForm);
+            Assert.AreEqual(fromView, fromForm.AllContactInfoFromForm);
         }
     }
 }
