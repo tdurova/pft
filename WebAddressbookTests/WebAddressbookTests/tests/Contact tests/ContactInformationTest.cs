@@ -21,9 +21,8 @@ namespace WebAddressbookTests
             //verifications
             Assert.AreEqual(fromTable, fromForm);
             Assert.AreEqual(fromTable.Address, fromForm.Address);
-            Console.Write("Expected:\n" + fromTable.AllPhones);
-            Console.Write("Was:\n" + fromForm.AllPhones);
             Assert.AreEqual(fromTable.AllPhones, fromForm.AllPhones);
+            Assert.AreEqual(fromTable.AllEmails, fromForm.AllEmails);
         }
 
         [Test]
@@ -32,10 +31,18 @@ namespace WebAddressbookTests
             int contactForAssert = 0;
             
             string fromView = app.Contacts.GetContactInformationFromView(contactForAssert);
+            string replaceWith = "";
+            fromView = fromView.Replace("\r\n", "").Replace("\n", replaceWith).Replace("\r", replaceWith).Replace(" ", replaceWith);
+            fromView = fromView.Trim();
+
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(contactForAssert);
-            Console.WriteLine("Was:\n" + fromForm.AllContactInfoFromForm);
+            string stringFromForm = fromForm.AllContactInfoFromForm;
+            stringFromForm = stringFromForm.Replace("\r\n", "").Replace("\n", replaceWith).Replace("\r", replaceWith).Replace(" ", replaceWith);
+            stringFromForm = stringFromForm.Trim();
+
             Console.WriteLine("Expected:\n" + fromView);
-            Assert.AreEqual(fromView, fromForm.AllContactInfoFromForm);
+            Console.WriteLine("Was:\n" + fromForm.AllContactInfoFromForm.Trim());
+            Assert.AreEqual(fromView.Trim(), stringFromForm);
         }
     }
 }

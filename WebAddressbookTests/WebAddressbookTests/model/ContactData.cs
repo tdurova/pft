@@ -36,6 +36,25 @@ namespace WebAddressbookTests
         public int Age { get; set; }
         public int AnniversaryAge { get; set; }
 
+        private string _allEmails;
+
+        public string AllEmails
+        {
+            get
+            {
+                if (_allEmails != null)
+                {
+                    return _allEmails;
+                }
+                else
+                {
+                    return
+                        (CleanupCode(Email) + CleanupCode(Email2) + CleanupCode(Email3)).Trim();
+                }
+            }
+            set { _allEmails = value; }
+        }
+
         public string AllPhones
         {
             get
@@ -52,6 +71,7 @@ namespace WebAddressbookTests
             set { _allPhones = value; }
         }
 
+
         public string AllContactInfoFromForm
         {
             get
@@ -60,46 +80,91 @@ namespace WebAddressbookTests
                 {
                     return _allContactInfoFromForm;
                 }
-                else
+
+                string textToreturn = this + Middlename + Lastname;
+
+                if (Nickname != "")
                 {
-                    // тут надо выставить все в нужном порядке, также, как на странице View
-                    string textToreturn = string.Format(
-@"{0} {1} {2}
-{3}
-
-{4}
-{5}
-{6}
-
-H: {7}
-M: {8}
-W: {9}
-F: {10}
-
-{11}
-{12}
-{13}
-Homepage:
-{14}
-
-Birthday {15}. {16} {17} ({24})
-Anniversary {18}. {19} {20} ({25})
-
-{21}
-
-P: {22}
-
-{23}", this,Middlename,Lastname,Nickname, Title, Company, Address, HomePhone, MobilePhone, WorkPhone, Fax,
- Email, Email2, Email3, Homepage, Bday, Bmonth, Byear, Aday, Amonth, Ayear, Address2, Phone2, Notes, Age, AnniversaryAge);
-                    
-                    
-                    return textToreturn;
+                    textToreturn = textToreturn + Nickname;
                 }
+                if (Title != "")
+                {
+                    textToreturn = textToreturn + Title;
+                }
+                if (Company != "")
+                {
+                    textToreturn = textToreturn + Company;
+                }
+                if (Address != "")
+                {
+                    textToreturn = textToreturn + Address;
+                }
+                
+                // Phones
+                if (HomePhone != "")
+                {
+                    textToreturn = textToreturn + "H:" + HomePhone;
+                }
+                if (MobilePhone != "")
+                {
+                    textToreturn = textToreturn + "M:" + MobilePhone;
+                }
+                if (WorkPhone != "")
+                {
+                    textToreturn = textToreturn + "W:" + WorkPhone;
+                }
+                if (Fax != "")
+                {
+                    textToreturn = textToreturn + "F:" + Fax;
+                }
+
+                // Emails
+                if (Email != "")
+                {
+                    textToreturn = textToreturn + Email;
+                }
+                if (Email2 != "")
+                {
+                    textToreturn = textToreturn + Email2;
+                }
+                if (Email3 != "")
+                {
+                    textToreturn = textToreturn + Email3;
+                }
+                if (Homepage != "")
+                {
+                    textToreturn = textToreturn + "Homepage:" + Homepage;
+                }
+                
+                // dates birth
+                if (Age != 0)
+                {
+                    textToreturn = textToreturn + String.Format("Birthday{0}.{1}{2}({3})",Bday,Bmonth,Byear,Age);
+                }
+                // anniversary
+                if (AnniversaryAge != 0)
+                {
+                    textToreturn = textToreturn + String.Format("Anniversary{0}.{1}{2}({3})", Aday, Amonth, Ayear, AnniversaryAge);
+                }
+
+                if (Address2 != "")
+                {
+                    textToreturn = textToreturn + Address2;
+                }
+                if (Phone2 != "")
+                {
+                    textToreturn = textToreturn + "P:" + Phone2;
+                }
+                if (Notes != "")
+                {
+                    textToreturn = textToreturn + Notes;
+                }
+
+
+                return textToreturn;
             }
             set { _allContactInfoFromForm = value; }
         }
-
-
 
         private string CleanupCode(string phone)
         {
