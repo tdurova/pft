@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using NUnit.Framework.Constraints;
 
 namespace WebAddressbookTests
@@ -174,7 +175,7 @@ namespace WebAddressbookTests
             }
             else
             {
-                return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+                return Regex.Replace(phone, "[ -()]", "") + "\r\n";
             }
         }
 

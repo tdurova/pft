@@ -354,5 +354,23 @@ namespace WebAddressbookTests
             driver.FindElements(By.XPath("//tr[@name='entry']//img[@alt='Details']"))[index].Click();
             return this;
         }
+
+        public int GetNumberOfSearchResults(string stringForSearch)
+        {
+            manager.Navigator.GoToHomePage();
+            Type(By.XPath("//input[@name='searchstring']"), stringForSearch);
+            string text = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
+        }
+
+        public int GetContactRowsFromSearch(string stringForSearch)
+        {
+            manager.Navigator.GoToHomePage();
+            Type(By.XPath("//input[@name='searchstring']"), stringForSearch);
+            int rowCount = driver.FindElements(By.XPath("//tr[@name='entry']")).Count - 
+                driver.FindElements(By.XPath("//tr[@name='entry'][@style='display: none;']")).Count;
+            return rowCount;
+        }
     }
 }
