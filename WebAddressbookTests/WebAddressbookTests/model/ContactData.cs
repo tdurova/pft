@@ -161,7 +161,6 @@ namespace WebAddressbookTests
                     textToreturn = textToreturn + Notes;
                 }
 
-
                 return textToreturn;
             }
             set { _allContactInfoFromForm = value; }
@@ -175,7 +174,7 @@ namespace WebAddressbookTests
             }
             else
             {
-                return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+                return Regex.Replace(phone, "[ -]", "") + "\r\n";
             }
         }
 

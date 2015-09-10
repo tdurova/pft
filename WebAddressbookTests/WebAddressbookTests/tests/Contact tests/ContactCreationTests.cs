@@ -6,17 +6,23 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
     {
-        [Test]
-        public void ContactCreationTest()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            //Создаем объект класса ContactData и задаем значения переменных
-            ContactData contact = new ContactData("Ivan")
-            {
-                Title = "", Company = "", Nickname = "", Lastname = "", Middlename = "Vitalievich", 
-                WorkPhone = "", Address2 = "", Bmonth = "January", Bday = "1", Photo = "", Address = "", 
-                MobilePhone = "", HomePhone = "", Phone2 = "", Byear = "1990", Notes = "testnotes", Email = ""
-            };
+            List<ContactData> contacts = new List<ContactData>();
+            int contactCountForGenerate = 5;
 
+            for (int i = 0; i < contactCountForGenerate; i++)
+            {
+                // добавляем контакт с автосгенереным именем
+                contacts.Add(new ContactData(GenerateRandomString(30)));
+            }
+
+            return contacts;
+        }
+        
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void ContactCreationTest(ContactData contact)
+        {
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.Create(contact);

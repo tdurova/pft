@@ -33,16 +33,16 @@ namespace WebAddressbookTests
             string fromView = app.Contacts.GetContactInformationFromView(contactForAssert);
             string replaceWith = "";
             fromView = fromView.Replace("\r\n", "").Replace("\n", replaceWith).Replace("\r", replaceWith).Replace(" ", replaceWith);
-            fromView = fromView.Trim();
+           // fromView = fromView.trim();
 
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(contactForAssert);
             string stringFromForm = fromForm.AllContactInfoFromForm;
             stringFromForm = stringFromForm.Replace("\r\n", "").Replace("\n", replaceWith).Replace("\r", replaceWith).Replace(" ", replaceWith);
-            stringFromForm = stringFromForm.Trim();
+            //stringFromForm = stringFromForm.trim();
 
             Console.WriteLine("Expected:\n" + fromView);
-            Console.WriteLine("Was:\n" + fromForm.AllContactInfoFromForm.Trim());
-            Assert.AreEqual(fromView.Trim(), stringFromForm);
+            Console.WriteLine("Was:\n" + fromForm.AllContactInfoFromForm);
+            Assert.AreEqual(fromView, stringFromForm);
         }
     }
 }
