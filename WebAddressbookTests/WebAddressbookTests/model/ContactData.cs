@@ -179,16 +179,16 @@ namespace WebAddressbookTests
         }
 
         //конструктор 1
-        public ContactData(string firstname)
+        public ContactData()
         {
-            Firstname = firstname;
+          
         }
 
         //конструктор 2
-        public ContactData(string firstname, string middlename, string lastname, string nickname, string photo,
-            string company, string title, string address,
-            string homePhone, string mobilePhone, string workPhone, string email, string bday, string bmonth, string byear,
-            string aday, string amonth, string ayear, string address2, string phone2, string notes)
+        public ContactData(string firstname, string middlename = "", string lastname = "", string nickname = "", string photo = "",
+            string company = "", string title = "", string address = "",
+            string homePhone = "", string mobilePhone = "", string workPhone = "", string email = "", string bday = "", string bmonth = "", string byear = "",
+            string aday = "", string amonth = "", string ayear = "", string address2 = "", string phone2 = "", string notes = "")
         {
             Firstname = firstname;
             Middlename = middlename;
@@ -247,57 +247,46 @@ namespace WebAddressbookTests
             return Firstname.GetHashCode();
         }
 
-        public bool ShouldBeFound(string stringForSearch, int i)
+        private bool SearchAndMessage(string stringForSearch, string i, string property, string propertyName)
         {
-            Match m;
+            var result = property != null && Regex.Match(property, stringForSearch, RegexOptions.IgnoreCase).Success;
 
-            if (Firstname != null)
+            if (result)
             {
-                m = Regex.Match(this.Firstname, stringForSearch, RegexOptions.IgnoreCase);
-                if (m.Success)
-                {
-                    Console.WriteLine(stringForSearch + " нашлось в Firstname для контакта №" + i);
-                    return true;
-                }
-            }
-            if (Lastname != null)
-            {
-                m = Regex.Match(this.Lastname, stringForSearch, RegexOptions.IgnoreCase);
-                if (m.Success)
-                {
-                    Console.WriteLine(stringForSearch + " нашлось в Lastname для контакта №" + i);
-                    return true;
-                }
-            }
-            if (Address != null)
-            {
-                m = Regex.Match(this.Address, stringForSearch, RegexOptions.IgnoreCase);
-                if (m.Success)
-                {
-                    Console.WriteLine(stringForSearch + " нашлось в Address для контакта №" + i);
-                    return true;
-                }
-            }
-            if (AllEmails != null)
-            {
-                m = Regex.Match(this.AllEmails, stringForSearch, RegexOptions.IgnoreCase);
-                if (m.Success)
-                {
-                    Console.WriteLine(stringForSearch + " нашлось в AllEmails для контакта №" + i);
-                    return true;
-                }
-            }
-            if (AllPhones != null)
-            {
-                m = Regex.Match(this.AllPhones, stringForSearch, RegexOptions.IgnoreCase);
-                if (m.Success)
-                {
-                    Console.WriteLine(stringForSearch + " нашлось в AllPhones для контакта №" + i);
-                    return true;
-                }
+                Console.WriteLine(string.Format("{0} нашлось в {1} для контакта № {2}", stringForSearch, propertyName, i));    
             }
 
-            return false;
+            return result;
+        }
+
+        public bool ShouldBeFound(string stringForSearch, string i)
+        {
+           // Match m;
+            var result = false;
+
+            result = SearchAndMessage(stringForSearch, i, Firstname, "FirstName");
+
+            if (!result)
+            {
+               result = SearchAndMessage(stringForSearch, i, Lastname, "Lastname");              
+            }
+            
+            if (!result)
+            {
+                result = SearchAndMessage(stringForSearch, i, Address, "Address");              
+            }
+            
+            if (!result)
+            {
+                result = SearchAndMessage(stringForSearch, i, AllEmails, "AllEmails");              
+            }
+            
+            if (!result)
+            {
+                result = SearchAndMessage(stringForSearch, i, AllPhones, "AllPhones");              
+            }
+            
+            return result;
         }
     }
 }

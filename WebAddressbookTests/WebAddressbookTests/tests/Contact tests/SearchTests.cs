@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
@@ -14,22 +16,54 @@ namespace WebAddressbookTests
         [Test]
         public void TestSearchPositiveResult()
         {
-            string stringForSearch = "ivan";
+            string stringForSearch = "Vasya";
 
             int numberOfSearchResults = app.Contacts.GetNumberOfSearchResults(stringForSearch);
-            int contactRowsFromSearch = app.Contacts.GetContactRowsFromSearch(stringForSearch);
 
+            /* если не найден ни один нужный нам контакт, то начнем модификацию существующего 
+             так как это всегда позитивный тест
+            if (numberOfSearchResults < 1)
+            {
+                ContactData contact = new ContactData(stringForSearch);
+                app.Contacts.Type(By.XPath("//input[@name='searchstring']"),"");
+                app.Contacts.Modify(1, contact);
+                numberOfSearchResults = 1;
+                WebDriverWait wait = new WebDriverWait(app.Driver, new TimeSpan(0, 0, 5));
+                wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//tr[@name='entry']//img[@alt='Edit']")));
+            }*/
+
+            int contactRowsFromSearch = app.Contacts.GetContactRowsFromSearch(stringForSearch);
+            
             Assert.AreEqual(numberOfSearchResults, contactRowsFromSearch);
 
             Console.WriteLine("stringForSearch: " + stringForSearch);
             Console.WriteLine("app.Contacts.GetContactInformationFromTable(): " +
                               app.Contacts.GetContactInformationFromTable(0));
 
-            for (int i = 0; i < numberOfSearchResults; i++)
+            
+                var contactList = app.Contacts.GetContactList(true);
+
+                Assert.IsNotNull(contactList);
+            var i = 0;
+            foreach (var contact in contactList )
             {
-                ContactData contact = app.Contacts.GetContactInformationFromTable(i);
-                Assert.IsTrue(contact.ShouldBeFound(stringForSearch, i));
+                if (contact.ShouldBeFound(stringForSearch, contact.Id))
+               {
+                   i++;
+               }
+
             }
+
+            Assert.AreEqual(i, numberOfSearchResults);
+
+             //   Assert.IsTrue(contact.ShouldBeFound(stringForSearch, i));
+           
+
+            //for (int i = 0; i < numberOfSearchResults; i++)
+            //{
+            //    ContactData contact = app.Contacts.GetContactInformationFromTable(i);
+            //    Assert.IsTrue(contact.ShouldBeFound(stringForSearch, i));
+            //}
         }
         
         

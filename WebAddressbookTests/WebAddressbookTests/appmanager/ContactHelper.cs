@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using System.Linq;
 
 namespace WebAddressbookTests
 {
@@ -205,29 +207,28 @@ namespace WebAddressbookTests
 
         private List<ContactData> _contactCash = null;
         
-        public List<ContactData> GetContactList()
+        public List<ContactData> GetContactList(bool displayedOnly = false)
         {
                 if (_contactCash == null)
             {
                 _contactCash = new List<ContactData>();
                 manager.Navigator.GoToHomePage();
-                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));  
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
 
-                foreach (IWebElement element in elements)
+                foreach (IWebElement element in elements.Where(D => (D.Displayed || !displayedOnly)))
                 {
-                    if (element.Displayed)
-                    {
                         List<IWebElement> cells = new List<IWebElement>(element.FindElements(By.TagName("td")));
 
-                        _contactCash.Add(new ContactData(cells[2].Text)
+                      //  _contactCash.Add(new ContactData(cells[2].Text)
+                        _contactCash.Add(new ContactData()
                         {
+                            Firstname = cells[2].Text,
                             Id = element.FindElement(By.TagName("input")).GetAttribute("id")
-                        });
-                    }
+                        });                                 
                 }
             }
             
-            return new List<ContactData>(_contactCash);
+            return _contactCash;
         }
 
         public int GetContactListCount()
@@ -322,6 +323,23 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             IList<IWebElement> cells = driver.FindElements(By.XPath("//tr[@name='entry']"))[index].
                 FindElements(By.TagName("td"));
+
+            /*
+             
+                      ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
+                               
+                foreach (IWebElement element in elements.Where(D => D.Displayed))
+                {
+                        List<IWebElement> cells = new List<IWebElement>(element.FindElements(By.TagName("td")));
+
+                        _contactCash.Add(new ContactData(cells[2].Text)
+                        {
+                            Id = element.FindElement(By.TagName("input")).GetAttribute("id")
+                        });                                 
+                }
+             
+             */
+
             string lastName = cells[1].Text;
             string firstName = cells[2].Text;
             string address = cells[3].Text;
