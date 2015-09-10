@@ -247,5 +247,58 @@ namespace WebAddressbookTests
         {
             return Firstname.GetHashCode();
         }
+
+        public bool ShouldBeFound(string stringForSearch, int i)
+        {
+            Match m;
+
+            if (Firstname != null)
+            {
+                m = Regex.Match(this.Firstname, stringForSearch, RegexOptions.IgnoreCase);
+                if (m.Success)
+                {
+                    Console.WriteLine(stringForSearch + " нашлось в Firstname для контакта №" + i);
+                    return true;
+                }
+            }
+            if (Lastname != null)
+            {
+                m = Regex.Match(this.Lastname, stringForSearch, RegexOptions.IgnoreCase);
+                if (m.Success)
+                {
+                    Console.WriteLine(stringForSearch + " нашлось в Lastname для контакта №" + i);
+                    return true;
+                }
+            }
+            if (Address != null)
+            {
+                m = Regex.Match(this.Address, stringForSearch, RegexOptions.IgnoreCase);
+                if (m.Success)
+                {
+                    Console.WriteLine(stringForSearch + " нашлось в Address для контакта №" + i);
+                    return true;
+                }
+            }
+            if (AllEmails != null)
+            {
+                m = Regex.Match(this.AllEmails, stringForSearch, RegexOptions.IgnoreCase);
+                if (m.Success)
+                {
+                    Console.WriteLine(stringForSearch + " нашлось в AllEmails для контакта №" + i);
+                    return true;
+                }
+            }
+            if (AllPhones != null)
+            {
+                m = Regex.Match(this.AllPhones, stringForSearch, RegexOptions.IgnoreCase);
+                if (m.Success)
+                {
+                    Console.WriteLine(stringForSearch + " нашлось в AllPhones для контакта №" + i);
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

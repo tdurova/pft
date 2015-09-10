@@ -184,6 +184,7 @@ namespace WebAddressbookTests
 
         private ContactHelper InitContactModification(int p)
         {
+            Type(By.XPath("//input[@name='searchstring']"), ""); // очистим строку для поиска, чтобы увидеть все контакты
             if (IsElementPresent(By.XPath("//tr[@name='entry']//img[@alt='Edit']")) == false)
             {
                 Console.Out.Write("Нет ни одного контакта! Начинаем создание!");
@@ -191,6 +192,7 @@ namespace WebAddressbookTests
                 Create(contact);
             }
             manager.Navigator.GoToHomePage();
+            
             driver.FindElements(By.XPath("//tr[@name='entry']//img[@alt='Edit']"))[p].Click();
             return this;
         }
@@ -209,22 +211,25 @@ namespace WebAddressbookTests
             {
                 _contactCash = new List<ContactData>();
                 manager.Navigator.GoToHomePage();
-                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));  
 
                 foreach (IWebElement element in elements)
                 {
-                    List<IWebElement> cells = new List<IWebElement>(element.FindElements(By.TagName("td")));
-
-                    _contactCash.Add(new ContactData(cells[2].Text)
+                    if (element.Displayed)
                     {
-                        Id = element.FindElement(By.TagName("input")).GetAttribute("id")
-                    });
+                        List<IWebElement> cells = new List<IWebElement>(element.FindElements(By.TagName("td")));
+
+                        _contactCash.Add(new ContactData(cells[2].Text)
+                        {
+                            Id = element.FindElement(By.TagName("input")).GetAttribute("id")
+                        });
+                    }
                 }
             }
             
             return new List<ContactData>(_contactCash);
         }
-        
+
         public int GetContactListCount()
         {
             manager.Navigator.GoToHomePage();
@@ -344,6 +349,7 @@ namespace WebAddressbookTests
 
         public ContactHelper OpenContactView(int index)
         {
+            Type(By.XPath("//input[@name='searchstring']"), ""); // очистим строку для поиска, чтобы увидеть все контакты
             if (IsElementPresent(By.XPath("//tr[@name='entry']//img[@alt='Details']")) == false)
             {
                 Console.Out.Write("Нет ни одного контакта! Начинаем создание!");
@@ -358,7 +364,16 @@ namespace WebAddressbookTests
         public int GetNumberOfSearchResults(string stringForSearch)
         {
             manager.Navigator.GoToHomePage();
+
             Type(By.XPath("//input[@name='searchstring']"), stringForSearch);
+            if (IsElementPresent(By.XPath("//tr[@name='entry']//img[@alt='Edit']")) == false)
+            {
+                Console.Out.Write("Нет ни одного контакта! Начинаем создание с подходящим именем " + stringForSearch);
+                ContactData contact = new ContactData(stringForSearch);
+                Create(contact);
+                manager.Navigator.GoToHomePage();
+            }
+
             string text = driver.FindElement(By.TagName("label")).Text;
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
@@ -368,6 +383,14 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
             Type(By.XPath("//input[@name='searchstring']"), stringForSearch);
+            if (IsElementPresent(By.XPath("//tr[@name='entry']//img[@alt='Edit']")) == false)
+            {
+                Console.Out.Write("Нет ни одного контакта! Начинаем создание с подходящим именем " + stringForSearch);
+                ContactData contact = new ContactData(stringForSearch);
+                Create(contact);
+                manager.Navigator.GoToHomePage();
+            }
+
             int rowCount = driver.FindElements(By.XPath("//tr[@name='entry']")).Count - 
                 driver.FindElements(By.XPath("//tr[@name='entry'][@style='display: none;']")).Count;
             return rowCount;
