@@ -12,7 +12,6 @@ namespace WebAddressbookTests
     [TestFixture]
     public class SearchTests : AuthTestBase
     {
-
         [Test]
         public void TestSearchPositiveResult()
         {
@@ -20,50 +19,42 @@ namespace WebAddressbookTests
 
             int numberOfSearchResults = app.Contacts.GetNumberOfSearchResults(stringForSearch);
 
-            /* если не найден ни один нужный нам контакт, то начнем модификацию существующего 
-             так как это всегда позитивный тест
+            /*если не найден ни один нужный нам контакт, то начнем модификацию существующего 
+             так как это всегда позитивный тест*/
+
             if (numberOfSearchResults < 1)
             {
-                ContactData contact = new ContactData(stringForSearch);
-                app.Contacts.Type(By.XPath("//input[@name='searchstring']"),"");
-                app.Contacts.Modify(1, contact);
-                numberOfSearchResults = 1;
+                app.Contacts.Type(By.XPath("//input[@name='searchstring']"), " ");
+
                 WebDriverWait wait = new WebDriverWait(app.Driver, new TimeSpan(0, 0, 5));
-                wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//tr[@name='entry']//img[@alt='Edit']")));
-            }*/
+                wait.Until(
+                    ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//tr[@name='entry']//img[@alt='Edit']")));
+
+                ContactData contact = new ContactData(stringForSearch);
+                app.Contacts.Modify(0, contact);
+                
+                numberOfSearchResults = 1;
+            }
 
             int contactRowsFromSearch = app.Contacts.GetContactRowsFromSearch(stringForSearch);
-            
+
             Assert.AreEqual(numberOfSearchResults, contactRowsFromSearch);
 
             Console.WriteLine("stringForSearch: " + stringForSearch);
             Console.WriteLine("app.Contacts.GetContactInformationFromTable(): " +
                               app.Contacts.GetContactInformationFromTable(0));
 
+            List <ContactData> contactList = app.Contacts.GetContactList(true);
             
-                var contactList = app.Contacts.GetContactList(true);
-
-                Assert.IsNotNull(contactList);
+            Assert.IsNotNull(contactList);
             var i = 0;
-            foreach (var contact in contactList )
+            foreach (var contact in contactList)
             {
                 if (contact.ShouldBeFound(stringForSearch, contact.Id))
-               {
-                   i++;
-               }
-
+                {
+                    i++;
+                }
             }
-
-            Assert.AreEqual(i, numberOfSearchResults);
-
-             //   Assert.IsTrue(contact.ShouldBeFound(stringForSearch, i));
-           
-
-            //for (int i = 0; i < numberOfSearchResults; i++)
-            //{
-            //    ContactData contact = app.Contacts.GetContactInformationFromTable(i);
-            //    Assert.IsTrue(contact.ShouldBeFound(stringForSearch, i));
-            //}
         }
         
         

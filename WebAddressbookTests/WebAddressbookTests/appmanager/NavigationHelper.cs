@@ -17,6 +17,7 @@ namespace WebAddressbookTests
             if (driver.Url == baseURL + "/addressbook/")
             {
                 // на всякий случай чистим строку для поиска
+                Type(By.XPath("//input[@name='searchstring']"), " ");
                 return;
             }
             driver.Navigate().GoToUrl(baseURL + "/addressbook/");

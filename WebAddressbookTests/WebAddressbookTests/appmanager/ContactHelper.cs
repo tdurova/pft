@@ -186,7 +186,6 @@ namespace WebAddressbookTests
 
         private ContactHelper InitContactModification(int p)
         {
-            Type(By.XPath("//input[@name='searchstring']"), ""); // очистим строку для поиска, чтобы увидеть все контакты
             if (IsElementPresent(By.XPath("//tr[@name='entry']//img[@alt='Edit']")) == false)
             {
                 Console.Out.Write("Нет ни одного контакта! Начинаем создание!");
@@ -194,6 +193,10 @@ namespace WebAddressbookTests
                 Create(contact);
             }
             manager.Navigator.GoToHomePage();
+
+            WebDriverWait wait = new WebDriverWait(driver, new TimeSpan(0, 0, 5));
+            wait.Until(
+                ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.XPath("//tr[@name='entry']//img[@alt='Edit']")));
             
             driver.FindElements(By.XPath("//tr[@name='entry']//img[@alt='Edit']"))[p].Click();
             return this;
@@ -357,7 +360,6 @@ namespace WebAddressbookTests
 
         public string GetContactInformationFromView(int index)
         {
-            // реализовать
             manager.Navigator.GoToHomePage();
             OpenContactView(index);
             string contactViewInfo = driver.FindElement(By.XPath("id('content')")).Text;

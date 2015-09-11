@@ -7,6 +7,8 @@ namespace WebAddressbookTests
     public class GroupModificationTests : AuthTestBase
     {
         [Test]
+        // Внимание, тест написан давно, и если ни одной группы нет то он падает, надо предварительно создать хотя бы одну группу. 
+        // В тесте автоматическое создание не реализовано!
         public void GroupModificationTest()
         {
             GroupData newData = new GroupData("zzz");

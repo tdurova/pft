@@ -7,6 +7,8 @@ namespace WebAddressbookTests
     public class GroupRemovalTests : AuthTestBase
     {
         [Test]
+        // Внимание, тест написан давно, и если ни одной группы нет то он падает, надо предварительно создать хотя бы одну группу. 
+        // В тесте автоматическое создание не реализовано!
         public void GroupRemovalTest()
         {
             List<GroupData> oldGroups = app.Groups.GetGroupList();

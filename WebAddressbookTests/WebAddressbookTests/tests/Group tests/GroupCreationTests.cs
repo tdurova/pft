@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
@@ -35,6 +36,9 @@ namespace WebAddressbookTests
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
+
+            Console.WriteLine("\noldGroups\n" + oldGroups);
+            Console.WriteLine("\nnewGroups\n" + newGroups);
             
             Assert.AreEqual(oldGroups, newGroups);
         }
