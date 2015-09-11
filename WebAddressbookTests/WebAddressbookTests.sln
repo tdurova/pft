@@ -7,6 +7,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAddressbookTests", "WebA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "geometry", "geometry\geometry.csproj", "{017598AC-60C8-414A-ABB7-34AE95F631F5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5AE7A383-9F50-45AE-AD8C-40F4AFDA7C26}"
+	ProjectSection(SolutionItems) = preProject
+		groups.csv = groups.csv
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addressbook-test-data-generators", "addressbook-test-data-generators\addressbook-test-data-generators.csproj", "{32A12818-9C24-4E18-A050-E052B36B301E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C5128745-189E-4509-8713-47ED8AD7F0C3} = {C5128745-189E-4509-8713-47ED8AD7F0C3}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +31,10 @@ Global
 		{017598AC-60C8-414A-ABB7-34AE95F631F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{017598AC-60C8-414A-ABB7-34AE95F631F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{017598AC-60C8-414A-ABB7-34AE95F631F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32A12818-9C24-4E18-A050-E052B36B301E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32A12818-9C24-4E18-A050-E052B36B301E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32A12818-9C24-4E18-A050-E052B36B301E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32A12818-9C24-4E18-A050-E052B36B301E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

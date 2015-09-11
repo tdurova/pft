@@ -18,12 +18,11 @@ namespace WebAddressbookTests
         
         public static string GenerateRandomString(int max)
         {
-            
             int l = Convert.ToInt32(Rnd.NextDouble() * max); // получили число от 0 до максимального
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < l; i++)
             {
-                builder.Append(Convert.ToChar(32 + Convert.ToInt32(Rnd.NextDouble()*223)));
+                builder.Append(Convert.ToChar(32 + Convert.ToInt32(Rnd.NextDouble()*65)));
             }
             return builder.ToString();
         }
